@@ -1,0 +1,76 @@
+﻿@model IEnumerable<CategoryProdu.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               ProductId
+            </th>
+            <th>
+               ProductName
+            </th>
+            <th>
+                CategoryId
+            </th>
+            <th>
+                CategoryName
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.ProductId
+            </td>
+            <td>
+                @item.ProductName
+            </td>
+            <td>
+                @item.CategoryId
+            </td>
+            <td>
+                    @item.category?.CategoryName
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="pagination">
+    @if(ViewBag.PreviousPage > 0)
+    {
+        <a asp-action="Index" asp-route-page="@(ViewBag.PreviousPage)" asp-route-PageSize="@ViewBag.pageSize">Previous</a>
+    }
+    @for(int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        <a asp-action="Index" asp-route-page="@i" asp-route-PageSize="@ViewBag.pageSize">@i</a>
+    }
+    @if(ViewBag.NextPage <= ViewBag.TotalPages)
+    {
+        <a asp-action="Index" asp-route-page="@(ViewBag.NextPage)" asp-route-PageSize="@ViewBag.pageSize">Next</a>
+    }
+</div>
+
+
+@*<div>
+    @for (int i =1; i<= ViewBag.TotalPages; i++)
+    {
+        <a href="@Url.Action("Index", new {page = i , pageSize = ViewBag.PageSize})">
+            @i
+        </a>
+    }
+</div>*@
